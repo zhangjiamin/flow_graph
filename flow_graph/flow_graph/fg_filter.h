@@ -5,7 +5,7 @@
 using namespace boost;
 
 template <typename _InputDataType, typename _InputChannel, typename _Transformer, typename _OutputDataType, typename _OutputChannel>
-struct base_filter
+struct filter
 {
 	typedef _InputDataType	input_data_type;
 	typedef _InputChannel	input_channel_type;
@@ -15,15 +15,15 @@ struct base_filter
 };
 
 template <typename _InputDataType, typename _InputChannel, typename _Transformer, typename _OutputDataType, typename _OutputChannel>
-struct base_sync_filter:public base_filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>
+struct base_filter:public filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>
 {
 public:
-	base_sync_filter()
+	base_filter()
 	{
 		m_name      = "filter";
 	}
 
-	base_sync_filter(string name)
+	base_filter(string name)
 	{
 		m_name      = name;
 	}
@@ -56,64 +56,14 @@ protected:
 	string							m_name;
 };
 
-template <typename _InputDataType, typename _InputChannel, typename _Transformer, typename _OutputDataType, typename _OutputChannel>
-struct base_async_filter:public base_sync_filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>
-{
-public:
-	base_async_filter()
-	{
-		m_name      = "filter";
-	}
-
-	base_async_filter(string name)
-	{
-		m_name      = name;
-	}
-
-public:
-	void start()
-	{
-		thread(&base_async_filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>::loop_operate, this);
-	}
-	void stop(){}
-protected:
-	void loop_operate()
-	{
-		while(true)
-		{
-			operate();
-			this_thread::sleep(posix_time::milliseconds(1));
-		}
-	}
-};
-
-
 template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
-struct sync_queue_channel_filter:public base_sync_filter<_InputDataType, sync_queue_channel<_InputDataType>, _Transformer, _OutputDataType, sync_queue_channel<_OutputDataType> >
+struct base_queue_channel_filter:public base_filter<_InputDataType, base_queue_channel<_InputDataType>, _Transformer, _OutputDataType, base_queue_channel<_OutputDataType> >
 {
-public:
-	sync_queue_channel_filter()
-	{
-		m_name      = "filter";
-	}
-	sync_queue_channel_filter(string name)
-	{
-		m_name      = name;
-	}
 };
 
 template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
-struct async_queue_channel_filter:public base_async_filter<_InputDataType, async_queue_channel<_InputDataType>, _Transformer, _OutputDataType, async_queue_channel<_OutputDataType> >
+struct base_async_queue_channel_filter:public base_filter<_InputDataType, base_async_queue_channel<_InputDataType>, _Transformer, _OutputDataType, base_async_queue_channel<_OutputDataType> >
 {
-public:
-	async_queue_channel_filter()
-	{
-		m_name      = "filter";
-	}
-	async_queue_channel_filter(string name)
-	{
-		m_name      = name;
-	}
 };
 
 

@@ -10,6 +10,7 @@
 #include "fg_consumer.h"
 #include "fg_sink.h"
 #include "fg_filter.h"
+#include "fg_adapter.h"
 //#include "fg_connector.h"
 
 #include <iostream>
@@ -18,10 +19,22 @@ using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	async_queue_channel_source<int,int_generator> bsource("source");
-	async_queue_channel_filter<int,int_transformer,int> bfilter("filter");
-	async_queue_channel_sink<int,int_consumer>bsink("sink");
-	
+	typedef base_source<int, int_generator, base_async_queue_channel<int> > base_async_queue_source;
+	typedef LoopOperator<base_async_queue_source> loop_base_async_queue_source;
+	typedef AsyncOperator<loop_base_async_queue_source> async_loop_base_async_queue_source;
+
+	typedef base_async_queue_channel_filter<int, int_transformer, int> base_async_queue_filter;
+	typedef LoopOperator<base_async_queue_filter> loop_base_async_queue_filter;
+	typedef AsyncOperator<loop_base_async_queue_filter> async_loop_base_async_queue_filter;
+
+	typedef base_sink<int, int_consumer, base_async_queue_channel<int> > base_async_queue_sink;
+	typedef LoopOperator<base_async_queue_sink> loop_base_async_queue_sink;
+	typedef AsyncOperator<loop_base_async_queue_sink> async_loop_base_async_queue_sink;
+
+	async_loop_base_async_queue_source bsource;
+	async_loop_base_async_queue_filter bfilter;
+	async_loop_base_async_queue_sink bsink;
+
 	bfilter.input_channel(bsource.output_channel());
 	bsink.input_channel(bfilter.output_channel());
 
