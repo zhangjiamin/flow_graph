@@ -24,6 +24,27 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fg_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_channel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_transformer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_consumer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_sink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
