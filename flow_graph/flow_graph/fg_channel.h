@@ -4,6 +4,9 @@
 #include <string>
 using namespace std;
 
+#include <boost/thread.hpp>
+using namespace boost;
+
 template <typename _DataType>
 struct base_channel
 {
@@ -15,10 +18,7 @@ template <typename _DataType>
 struct sync_queue_channel:public base_channel<_DataType>
 {
 public:
-	sync_queue_channel()
-	{
-
-	}
+	sync_queue_channel(){}
 
 	sync_queue_channel(string name)
 	{
@@ -47,6 +47,45 @@ public:
 protected:
 	string				m_name;
 	queue<_DataType>	m_queue;
+};
+
+
+template <typename _DataType>
+struct async_queue_channel:public base_channel<_DataType>
+{
+public:
+	async_queue_channel(){}
+
+	async_queue_channel(string name)
+	{
+		m_name = name;
+	}
+
+public:
+	void write(const _DataType& data)
+	{
+		mutex::scoped_lock lock(m_mu);
+		m_queue.push(data);
+	}
+
+	bool read(_DataType& data)
+	{
+		mutex::scoped_lock lock(m_mu);
+		if (m_queue.empty())
+		{
+			return false;
+		} 
+		else
+		{
+			data = m_queue.front();
+			m_queue.pop();
+			return true;
+		}
+	}
+protected:
+	string				m_name;
+	queue<_DataType>	m_queue;
+	mutex				m_mu;
 };
 
 

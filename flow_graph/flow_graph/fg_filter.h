@@ -1,6 +1,8 @@
 #ifndef __FLOW_GRAPH_FILTER_H
 #define __FLOW_GRAPH_FILTER_H
 #include "fg_channel.h"
+#include <boost/thread.hpp>
+using namespace boost;
 
 template <typename _InputDataType, typename _InputChannel, typename _Transformer, typename _OutputDataType, typename _OutputChannel>
 struct base_filter
@@ -54,6 +56,38 @@ protected:
 	string							m_name;
 };
 
+template <typename _InputDataType, typename _InputChannel, typename _Transformer, typename _OutputDataType, typename _OutputChannel>
+struct base_async_filter:public base_sync_filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>
+{
+public:
+	base_async_filter()
+	{
+		m_name      = "filter";
+	}
+
+	base_async_filter(string name)
+	{
+		m_name      = name;
+	}
+
+public:
+	void start()
+	{
+		thread(&base_async_filter<_InputDataType, _InputChannel, _Transformer, _OutputDataType, _OutputChannel>::loop_operate, this);
+	}
+	void stop(){}
+protected:
+	void loop_operate()
+	{
+		while(true)
+		{
+			operate();
+			this_thread::sleep(posix_time::milliseconds(1));
+		}
+	}
+};
+
+
 template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
 struct sync_queue_channel_filter:public base_sync_filter<_InputDataType, sync_queue_channel<_InputDataType>, _Transformer, _OutputDataType, sync_queue_channel<_OutputDataType> >
 {
@@ -63,6 +97,20 @@ public:
 		m_name      = "filter";
 	}
 	sync_queue_channel_filter(string name)
+	{
+		m_name      = name;
+	}
+};
+
+template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
+struct async_queue_channel_filter:public base_async_filter<_InputDataType, async_queue_channel<_InputDataType>, _Transformer, _OutputDataType, async_queue_channel<_OutputDataType> >
+{
+public:
+	async_queue_channel_filter()
+	{
+		m_name      = "filter";
+	}
+	async_queue_channel_filter(string name)
 	{
 		m_name      = name;
 	}

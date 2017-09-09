@@ -5,6 +5,9 @@
 #include <iostream>
 using namespace std;
 
+#include <boost/thread.hpp>
+using namespace boost;
+
 template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
 struct base_source
 {
@@ -28,7 +31,7 @@ public:
 	}
 
 public:
-	output_channel_type* const output_channel()
+	output_channel_type* output_channel()
 	{
 		return &m_channel;
 	}
@@ -59,5 +62,50 @@ public:
 };
 
 
+template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
+struct base_async_source:public base_sync_source<_OutputDataType, _Generator, _OutputChannel >
+{
+public:
+	base_async_source()
+	{
+		m_name      = "source";
+	}
+
+	base_async_source(string name)
+	{
+		m_name      = name;
+	}
+
+public:
+	void start()
+	{
+		thread(&base_async_source<_OutputDataType, _Generator, _OutputChannel>::loop_operate, this);
+	}
+	void stop(){}
+protected:
+	void loop_operate()
+	{
+		while(true)
+		{
+			operate();
+			this_thread::sleep(posix_time::milliseconds(1));
+		}
+	}
+};
+
+
+template <typename _OutputDataType, typename _Generator>
+struct async_queue_channel_source:public base_async_source<_OutputDataType, _Generator, async_queue_channel<_OutputDataType> >
+{
+public:
+	async_queue_channel_source()
+	{
+		m_name      = "source";
+	}
+	async_queue_channel_source(string name)
+	{
+		m_name      = name;
+	}
+};
 
 #endif /* __FLOW_GRAPH_SOURCE_H */

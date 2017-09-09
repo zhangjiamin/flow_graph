@@ -18,11 +18,10 @@ using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	sync_queue_channel_source<int,int_generator> bsource("source");
-	sync_queue_channel_filter<int,int_transformer,int> bfilter("filter");
-	sync_queue_channel_sink<int,int_consumer>bsink("sink");
+	async_queue_channel_source<int,int_generator> bsource("source");
+	async_queue_channel_filter<int,int_transformer,int> bfilter("filter");
+	async_queue_channel_sink<int,int_consumer>bsink("sink");
 	
-
 	bfilter.input_channel(bsource.output_channel());
 	bsink.input_channel(bfilter.output_channel());
 
@@ -31,15 +30,16 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	for(int i=0;i<100;++i)
 	{
-		bsource.operate();
-		bfilter.operate();
-		bsink.operate();
+		//bsource.operate();
+		//bfilter.operate();
+		//bsink.operate();
 	}
 
-	bfilter.operate();
-	bsink.operate();
+	bsource.start();
+	bfilter.start();
+	bsink.start();
 
-	system("pause");
+	::system("pause");
 	return 0;
 }
 

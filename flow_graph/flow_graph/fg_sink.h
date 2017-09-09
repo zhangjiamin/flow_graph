@@ -5,6 +5,9 @@
 #include <iostream>
 using namespace std;
 
+#include <boost/thread.hpp>
+using namespace boost;
+
 template <typename _InputDataType, typename _Consumer, typename _InputChannel>
 struct base_sink
 {
@@ -52,6 +55,37 @@ protected:
 	string							m_name;
 };
 
+template <typename _InputDataType, typename _Consumer, typename _InputChannel>
+struct base_async_sink:public base_sync_sink<_InputDataType, _Consumer, _InputChannel >
+{
+public:
+	base_async_sink()
+	{
+		m_name      = "sink";
+	}
+
+	base_async_sink(string name)
+	{
+		m_name      = name;
+	}
+
+public:
+	void start()
+	{
+		thread(&base_async_sink<_InputDataType, _Consumer, _InputChannel>::loop_operate, this);
+	}
+	void stop(){}
+protected:
+	void loop_operate()
+	{
+		while(true)
+		{
+			operate();
+			this_thread::sleep(posix_time::milliseconds(1));
+		}
+	}
+};
+
 
 template <typename _InputDataType, typename _Consumer>
 struct sync_queue_channel_sink:public base_sync_sink<_InputDataType, _Consumer, sync_queue_channel<_InputDataType> >
@@ -63,6 +97,22 @@ public:
 		m_input_channel = NULL;
 	}
 	sync_queue_channel_sink(string name)
+	{
+		m_name = name;
+		m_input_channel = NULL;
+	}
+};
+
+template <typename _InputDataType, typename _Consumer>
+struct async_queue_channel_sink:public base_async_sink<_InputDataType, _Consumer, async_queue_channel<_InputDataType> >
+{
+public:
+	async_queue_channel_sink()
+	{
+		m_name          = "sink";
+		m_input_channel = NULL;
+	}
+	async_queue_channel_sink(string name)
 	{
 		m_name = name;
 		m_input_channel = NULL;
