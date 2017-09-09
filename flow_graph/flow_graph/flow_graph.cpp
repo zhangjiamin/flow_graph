@@ -9,16 +9,32 @@
 #include "fg_transformer.h"
 #include "fg_consumer.h"
 #include "fg_sink.h"
+#include "fg_filter.h"
+//#include "fg_connector.h"
 
 #include <iostream>
 using namespace std;
 
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-	base_generator<int> bg;
-	base_generator<int>::output_data_type a = 0;
+	sync_queue_channel_source<int,int_generator> bsource("source");
+	sync_queue_channel_filter<int,int_transformer,int> bfilter("filter");
+	sync_queue_channel_sink<int,int_consumer>bsink("sink");
+	
 
-	cout<<a<<endl;
+	bfilter.input_channel(bsource.output_channel());
+	bsink.input_channel(bfilter.output_channel());
+
+	bool r;
+	int a;
+
+	for(int i=0;i<100;++i)
+	{
+		bsource.operate();
+		bfilter.operate();
+		bsink.operate();
+	}
 
 	system("pause");
 	return 0;

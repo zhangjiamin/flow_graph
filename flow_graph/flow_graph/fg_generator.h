@@ -8,5 +8,22 @@ struct base_generator
 };
 
 
+struct int_generator: public base_generator<int>
+{
+public:
+	int_generator()
+	{
+		m_val = output_data_type();
+	}
+
+	output_data_type& operator()()
+	{
+		m_val++;
+		return m_val;
+	}
+protected:
+	output_data_type m_val;
+
+};
 
 #endif /* __FLOW_GRAPH_GENERATOR_H */

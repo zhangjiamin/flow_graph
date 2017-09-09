@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fg_channel.h" />
+    <ClInclude Include="fg_connector.h" />
     <ClInclude Include="fg_consumer.h" />
     <ClInclude Include="fg_filter.h" />
     <ClInclude Include="fg_generator.h" />
