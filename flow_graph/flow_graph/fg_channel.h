@@ -18,7 +18,10 @@ template <typename _DataType>
 struct sync_queue_channel:public base_channel<_DataType>
 {
 public:
-	sync_queue_channel(){}
+	sync_queue_channel()
+	{
+		m_name = "channel";
+	}
 
 	sync_queue_channel(string name)
 	{
@@ -26,12 +29,12 @@ public:
 	}
 
 public:
-	void write(const _DataType& data)
+	void write(const input_data_type& data)
 	{
 		m_queue.push(data);
 	}
 
-	bool read(_DataType& data)
+	bool read(output_data_type& data)
 	{
 		if (m_queue.empty())
 		{
@@ -62,13 +65,13 @@ public:
 	}
 
 public:
-	void write(const _DataType& data)
+	void write(const input_data_type& data)
 	{
 		mutex::scoped_lock lock(m_mu);
 		m_queue.push(data);
 	}
 
-	bool read(_DataType& data)
+	bool read(output_data_type& data)
 	{
 		mutex::scoped_lock lock(m_mu);
 		if (m_queue.empty())

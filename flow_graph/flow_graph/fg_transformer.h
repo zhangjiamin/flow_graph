@@ -11,10 +11,7 @@ struct base_transformer
 struct int_transformer: public base_transformer<int, int>
 {
 public:
-	int_transformer()
-	{
-		//m_val = output_data_type();
-	}
+	int_transformer(){}
 
 	output_data_type& operator()(const input_data_type& data)
 	{
@@ -23,7 +20,6 @@ public:
 	}
 protected:
 	output_data_type m_val;
-
 };
 
 #endif /* __FLOW_GRAPH_TRANSFORMER_H */

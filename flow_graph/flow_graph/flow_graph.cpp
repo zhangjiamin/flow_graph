@@ -25,16 +25,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	bfilter.input_channel(bsource.output_channel());
 	bsink.input_channel(bfilter.output_channel());
 
-	bool r;
-	int a;
-
-	for(int i=0;i<100;++i)
-	{
-		//bsource.operate();
-		//bfilter.operate();
-		//bsink.operate();
-	}
-
 	bsource.start();
 	bfilter.start();
 	bsink.start();

@@ -20,8 +20,6 @@ public:
 	{
 		cout<<data<<endl;
 	}
-protected:
-	
 };
 
 #endif /* __FLOW_GRAPH_CONSUMER_H */
