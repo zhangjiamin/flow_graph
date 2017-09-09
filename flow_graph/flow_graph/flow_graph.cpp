@@ -36,6 +36,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		bsink.operate();
 	}
 
+	bfilter.operate();
+	bsink.operate();
+
 	system("pause");
 	return 0;
 }
