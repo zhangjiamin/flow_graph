@@ -1,27 +1,27 @@
 # flow_graph
 flow graph
 
-##concept
+## concept
 
-###source
+### source
 
-###filter
-
-
-###sink
-
-###channel
+### filter
 
 
-###function
+### sink
+
+### channel
 
 
-####operator
-
-####generator
+### function
 
 
-####transformer
+#### operator
+
+#### generator
 
 
-####consumer
+#### transformer
+
+
+#### consumer
