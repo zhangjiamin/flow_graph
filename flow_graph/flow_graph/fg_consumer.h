@@ -18,7 +18,11 @@ public:
 
 	void operator()(input_data_type& data)
 	{
-		cout<<data<<endl;
+		if(data % 100 == 0)
+		{
+			cout<<data<<endl;
+		}
+		
 	}
 };
 
