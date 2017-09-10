@@ -56,14 +56,5 @@ protected:
 	string							m_name;
 };
 
-template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
-struct base_queue_channel_filter:public base_filter<base_queue_channel<_InputDataType>, _Transformer, base_queue_channel<_OutputDataType> >
-{
-};
-
-template <typename _InputDataType, typename _Transformer, typename _OutputDataType>
-struct base_async_queue_channel_filter:public base_filter<base_async_queue_channel<_InputDataType>, _Transformer, base_async_queue_channel<_OutputDataType> >
-{
-};
 
 #endif /* __FLOW_GRAPH_FILTER_H */
