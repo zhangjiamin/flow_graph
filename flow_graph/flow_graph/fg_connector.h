@@ -26,6 +26,4 @@ struct connector:public base_connector<_Source, _Sink>
 	}
 };
 
-
-
 #endif /* __FLOW_GRAPH_CONNECTOR_H */

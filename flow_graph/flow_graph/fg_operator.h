@@ -1,5 +1,5 @@
-#ifndef __FLOW_GRAPH_ADAPTER_H
-#define __FLOW_GRAPH_ADAPTER_H
+#ifndef __FLOW_GRAPH_OPERATOR_H 
+#define __FLOW_GRAPH_OPERATOR_H 
 #include <queue>
 #include <string>
 #include <iostream>
@@ -7,6 +7,12 @@ using namespace std;
 
 #include <boost/thread.hpp>
 using namespace boost;
+
+
+struct Operator
+{
+	void operate(){}
+};
 
 template <typename AdaptableOperator>
 struct LoopOperator:public AdaptableOperator
@@ -44,26 +50,5 @@ struct AsyncOperator:public AdaptableOperator
 	}
 };
 
-template <typename AdaptableChannel>
-struct async_channel:public AdaptableChannel
-{
-	typedef typename AdaptableChannel::input_data_type		input_data_type;
-	typedef typename AdaptableChannel::output_data_type		output_data_type;
 
-	void write(const input_data_type& data)
-	{
-		mutex::scoped_lock lock(m_mu);
-		AdaptableChannel::write(data);
-	}
-
-	bool read(output_data_type& data)
-	{
-		mutex::scoped_lock lock(m_mu);
-		return AdaptableChannel::read(data);
-	}
-protected:
-	mutex				m_mu;
-};
-
-
-#endif /* __FLOW_GRAPH_ADAPTER_H */
+#endif /* __FLOW_GRAPH_OPERATOR_H */

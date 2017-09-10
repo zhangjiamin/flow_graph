@@ -18,7 +18,7 @@ public:
 
 	void operator()(input_data_type& data)
 	{
-		if(data % 100 == 0)
+		if(data % 10000 == 0)
 		{
 			cout<<data<<endl;
 		}

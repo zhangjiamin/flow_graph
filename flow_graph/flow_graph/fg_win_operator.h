@@ -1,5 +1,5 @@
-#ifndef __FLOW_GRAPH_WIN_ADAPTER_H
-#define __FLOW_GRAPH_WIN_ADAPTER_H
+#ifndef __FLOW_GRAPH_WIN_OPERATOR_H
+#define __FLOW_GRAPH_WIN_OPERATOR_H
 #include <queue>
 #include <string>
 #include <iostream>
@@ -34,5 +34,4 @@ protected:
 
 };
 
-
-#endif /* __FLOW_GRAPH_WIN_ADAPTER_H */
+#endif /* __FLOW_GRAPH_WIN_OPERATOR_H */

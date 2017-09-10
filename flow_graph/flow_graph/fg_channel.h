@@ -7,8 +7,6 @@ using namespace std;
 #include <boost/thread.hpp>
 using namespace boost;
 
-#include "fg_adapter.h"
-
 template <typename _DataType>
 struct channel
 {
@@ -54,10 +52,30 @@ protected:
 	queue<_DataType>	m_queue;
 };
 
+template <typename AdaptableChannel>
+struct async_channel:public AdaptableChannel
+{
+	typedef typename AdaptableChannel::input_data_type		input_data_type;
+	typedef typename AdaptableChannel::output_data_type		output_data_type;
+
+	void write(const input_data_type& data)
+	{
+		mutex::scoped_lock lock(m_mu);
+		AdaptableChannel::write(data);
+	}
+
+	bool read(output_data_type& data)
+	{
+		mutex::scoped_lock lock(m_mu);
+		return AdaptableChannel::read(data);
+	}
+protected:
+	mutex				m_mu;
+};
+
 template<typename _DataType>
 struct base_async_queue_channel:public async_channel<base_queue_channel<_DataType> >
 {
 };
-
 
 #endif /* __FLOW_GRAPH_CHANNEL_H */

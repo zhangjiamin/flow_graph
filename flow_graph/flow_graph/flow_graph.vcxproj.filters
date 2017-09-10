@@ -48,10 +48,13 @@
     <ClInclude Include="fg_connector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fg_adapter.h">
+    <ClInclude Include="fg_config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fg_win_adapter.h">
+    <ClInclude Include="fg_operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_win_operator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

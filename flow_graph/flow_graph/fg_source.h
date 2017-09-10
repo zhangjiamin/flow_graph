@@ -1,12 +1,13 @@
 #ifndef __FLOW_GRAPH_SOURCE_H
 #define __FLOW_GRAPH_SOURCE_H
-#include "fg_channel.h"
 #include <string>
 #include <iostream>
 using namespace std;
 
 #include <boost/thread.hpp>
 using namespace boost;
+
+#include "fg_operator.h"
 
 template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
 struct source
@@ -17,7 +18,7 @@ struct source
 };
 
 template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
-struct base_source:public source<_OutputDataType, _Generator, _OutputChannel >
+struct base_source:public source<_OutputDataType, _Generator, _OutputChannel >, public Operator
 {
 public:
 	base_source()
@@ -45,6 +46,5 @@ protected:
 	output_channel_type				m_channel;
 	string							m_name;
 };
-
 
 #endif /* __FLOW_GRAPH_SOURCE_H */

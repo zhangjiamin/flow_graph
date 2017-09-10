@@ -10,13 +10,13 @@
 #include "fg_consumer.h"
 #include "fg_sink.h"
 #include "fg_filter.h"
-#include "fg_adapter.h"
-#include "fg_win_adapter.h"
+#include "fg_operator.h"
+#include "fg_win_operator.h"
 //#include "fg_connector.h"
+
 
 #include <iostream>
 using namespace std;
-
 
 int _tmain(int argc, _TCHAR* argv[])
 {

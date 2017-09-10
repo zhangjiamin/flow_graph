@@ -1,6 +1,7 @@
 #ifndef __FLOW_GRAPH_SINK_H
 #define __FLOW_GRAPH_SINK_H
 #include "fg_channel.h"
+#include "fg_operator.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -17,7 +18,7 @@ struct sink
 };
 
 template <typename _InputDataType, typename _Consumer, typename _InputChannel>
-struct base_sink:public sink<_InputDataType, _Consumer, _InputChannel >
+struct base_sink:public sink<_InputDataType, _Consumer, _InputChannel >, public Operator
 {
 public:
 	base_sink()
@@ -70,7 +71,5 @@ public:
 		m_input_channel = NULL;
 	}
 };
-
-
 
 #endif /* __FLOW_GRAPH_SINK_H */
