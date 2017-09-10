@@ -9,16 +9,15 @@ using namespace std;
 #include <boost/thread.hpp>
 using namespace boost;
 
-template <typename _InputDataType, typename _Consumer, typename _InputChannel>
+template <typename _Consumer, typename _InputChannel>
 struct sink
 {
-	typedef _InputDataType	input_data_type;
 	typedef _Consumer		consumer_type;
 	typedef _InputChannel	input_channel_type;
 };
 
-template <typename _InputDataType, typename _Consumer, typename _InputChannel>
-struct base_sink:public sink<_InputDataType, _Consumer, _InputChannel >, public Operator
+template <typename _Consumer, typename _InputChannel>
+struct base_sink:public sink<_Consumer, _InputChannel >, public Operator
 {
 public:
 	base_sink()
@@ -43,7 +42,7 @@ public:
 	void operate()
 	{
 		bool result = false;
-		input_data_type data;
+		input_channel_type::data_type data;
 		result = m_input_channel->read(data);
 		if(result)
 		{
@@ -57,7 +56,7 @@ protected:
 };
 
 template <typename _InputDataType, typename _Consumer>
-struct base_sync_queue_channel_sink:public base_sink<_InputDataType, _Consumer, base_queue_channel<_InputDataType> >
+struct base_sync_queue_channel_sink:public base_sink<_Consumer, base_queue_channel<_InputDataType> >
 {
 public:
 	base_sync_queue_channel_sink()

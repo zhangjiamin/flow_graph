@@ -9,16 +9,15 @@ using namespace boost;
 
 #include "fg_operator.h"
 
-template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
+template <typename _Generator, typename _OutputChannel>
 struct source
 {
-	typedef _OutputDataType	output_data_type;
 	typedef _Generator		generator_type;
 	typedef _OutputChannel	output_channel_type;
 };
 
-template <typename _OutputDataType, typename _Generator, typename _OutputChannel>
-struct base_source:public source<_OutputDataType, _Generator, _OutputChannel >, public Operator
+template <typename _Generator, typename _OutputChannel>
+struct base_source:public source<_Generator, _OutputChannel >, public Operator
 {
 public:
 	base_source()
