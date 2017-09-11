@@ -39,6 +39,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	bfilter.input_channel(bsource.output_channel());
 	bsink.input_channel(bfilter.output_channel());
 
+	//connect_source_to_sink(bsource,bfilter);
+	//connect_source_to_sink(bfilter,bsink);
+
 	bsource.start();
 	bfilter.start();
 	bsink.start();
