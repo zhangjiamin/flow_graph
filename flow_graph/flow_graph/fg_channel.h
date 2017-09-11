@@ -55,11 +55,14 @@ protected:
 template <typename AdaptableChannel>
 struct async_channel:public AdaptableChannel
 {
+public:
 	typedef typename AdaptableChannel::data_type		data_type;
 
 	async_channel(){}
-
-	async_channel(const async_channel&){}
+private:
+	async_channel(const async_channel&);
+	async_channel& operator=(async_channel const&);
+public:
 
 	void write(const data_type& data)
 	{
