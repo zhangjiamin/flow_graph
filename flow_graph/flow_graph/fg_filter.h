@@ -1,7 +1,5 @@
 #ifndef __FLOW_GRAPH_FILTER_H
 #define __FLOW_GRAPH_FILTER_H
-#include "fg_operator.h"
-#include "fg_channel.h"
 #include <boost/thread.hpp>
 using namespace boost;
 
@@ -14,7 +12,7 @@ struct filter
 };
 
 template <typename _InputChannel, typename _Transformer, typename _OutputChannel>
-struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel>, public Operator
+struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel>
 {
 public:
 	base_filter()

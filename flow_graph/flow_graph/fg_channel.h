@@ -1,5 +1,6 @@
 #ifndef __FLOW_GRAPH_CHANNEL_H
 #define __FLOW_GRAPH_CHANNEL_H
+
 #include <queue>
 #include <string>
 using namespace std;
@@ -55,6 +56,10 @@ template <typename AdaptableChannel>
 struct async_channel:public AdaptableChannel
 {
 	typedef typename AdaptableChannel::data_type		data_type;
+
+	async_channel(){}
+
+	async_channel(const async_channel&){}
 
 	void write(const data_type& data)
 	{

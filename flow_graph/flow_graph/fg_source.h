@@ -7,8 +7,6 @@ using namespace std;
 #include <boost/thread.hpp>
 using namespace boost;
 
-#include "fg_operator.h"
-
 template <typename _Generator, typename _OutputChannel>
 struct source
 {
@@ -17,7 +15,7 @@ struct source
 };
 
 template <typename _Generator, typename _OutputChannel>
-struct base_source:public source<_Generator, _OutputChannel >, public Operator
+struct base_source:public source<_Generator, _OutputChannel >
 {
 public:
 	base_source()

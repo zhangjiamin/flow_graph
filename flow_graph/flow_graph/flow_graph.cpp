@@ -12,7 +12,7 @@
 #include "fg_filter.h"
 #include "fg_operator.h"
 #include "fg_win_operator.h"
-//#include "fg_connector.h"
+#include "fg_connector.h"
 
 
 #include <iostream>
@@ -36,11 +36,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	async_loop_base_async_queue_filter bfilter;
 	async_loop_base_async_queue_sink bsink;
 
-	bfilter.input_channel(bsource.output_channel());
-	bsink.input_channel(bfilter.output_channel());
-
-	//connect_source_to_sink(bsource,bfilter);
-	//connect_source_to_sink(bfilter,bsink);
+	connect_source_to_sink(bsource,bfilter);
+	connect_source_to_sink(bfilter,bsink);
 
 	bsource.start();
 	bfilter.start();
@@ -49,10 +46,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	this_thread::sleep(posix_time::seconds(5));
 	bsource.stop();
 
-	this_thread::sleep(posix_time::seconds(5));
+	this_thread::sleep(posix_time::seconds(8));
 	bfilter.stop();
 
-	this_thread::sleep(posix_time::seconds(5));
+	this_thread::sleep(posix_time::seconds(8));
 	bsink.stop();
 
 	::system("pause");
