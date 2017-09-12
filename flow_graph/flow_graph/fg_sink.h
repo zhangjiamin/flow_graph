@@ -18,18 +18,8 @@ template <typename _Consumer, typename _InputChannel>
 struct base_sink:public sink<_Consumer, _InputChannel >
 {
 public:
-	base_sink()
-	{
-		m_name          = "sink";
-		m_input_channel = NULL;
-	}
-
-	base_sink(string name)
-	{
-		m_name = name;
-		m_input_channel = NULL;
-	}
-
+	base_sink():m_input_channel(NULL){m_name = "sink";}
+	base_sink(string name):m_input_channel(NULL){m_name = name;}
 public:
 	void input_channel(input_channel_type* channel)
 	{

@@ -18,17 +18,8 @@ template <typename _Generator, typename _OutputChannel>
 struct base_source:public source<_Generator, _OutputChannel >
 {
 public:
-	base_source()
-	{
-		m_name      = "source";
-
-	}
-
-	base_source(string name)
-	{
-		m_name      = name;
-	}
-
+	base_source(){m_name = "source";}
+	base_source(string name){m_name = name;}
 public:
 	output_channel_type* output_channel()
 	{

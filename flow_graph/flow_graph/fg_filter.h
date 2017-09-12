@@ -15,16 +15,8 @@ template <typename _InputChannel, typename _Transformer, typename _OutputChannel
 struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel>
 {
 public:
-	base_filter()
-	{
-		m_name      = "filter";
-	}
-
-	base_filter(string name)
-	{
-		m_name      = name;
-	}
-
+	base_filter(){m_name = "filter";}
+	base_filter(string name){m_name = name;}
 public:
 	output_channel_type* const output_channel()
 	{
@@ -53,6 +45,5 @@ protected:
 	input_channel_type*				m_input_channel;
 	string							m_name;
 };
-
 
 #endif /* __FLOW_GRAPH_FILTER_H */
