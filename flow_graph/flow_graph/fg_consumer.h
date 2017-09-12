@@ -12,9 +12,7 @@ struct base_consumer
 struct int_consumer: public base_consumer<int>
 {
 public:
-	int_consumer()
-	{
-	}
+	int_consumer(){}
 
 	void operator()(input_data_type& data)
 	{

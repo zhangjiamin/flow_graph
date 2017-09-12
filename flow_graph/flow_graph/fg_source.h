@@ -21,6 +21,7 @@ public:
 	base_source()
 	{
 		m_name      = "source";
+
 	}
 
 	base_source(string name)

@@ -32,9 +32,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	typedef WinLoopOperator<base_async_queue_sink> loop_base_async_queue_sink;
 	typedef AsyncOperator<loop_base_async_queue_sink> async_loop_base_async_queue_sink;
 
-	async_loop_base_async_queue_source bsource;
-	async_loop_base_async_queue_filter bfilter;
-	async_loop_base_async_queue_sink bsink;
+	async_loop_base_async_queue_source bsource;//("source");
+	async_loop_base_async_queue_filter bfilter;//("filter");
+	async_loop_base_async_queue_sink bsink;//("sink");
 
 	connect_source_to_sink(bsource,bfilter);
 	connect_source_to_sink(bfilter,bsink);

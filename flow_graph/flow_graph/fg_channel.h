@@ -18,15 +18,8 @@ template <typename _DataType>
 struct base_queue_channel:public channel<_DataType>
 {
 public:
-	base_queue_channel()
-	{
-		m_name = "channel";
-	}
-
-	base_queue_channel(string name)
-	{
-		m_name = name;
-	}
+	base_queue_channel(){m_name = "channel";}
+	base_queue_channel(string name){m_name = name;}
 
 public:
 	void write(const data_type& data)
@@ -57,7 +50,6 @@ struct async_channel:public AdaptableChannel
 {
 public:
 	typedef typename AdaptableChannel::data_type		data_type;
-
 	async_channel(){}
 private:
 	async_channel(const async_channel&);
@@ -82,6 +74,11 @@ protected:
 template<typename _DataType>
 struct base_async_queue_channel:public async_channel<base_queue_channel<_DataType> >
 {
+public:
+	base_async_queue_channel(){}
+private:
+	base_async_queue_channel(const base_async_queue_channel&);
+	base_async_queue_channel& operator=(base_async_queue_channel const&);
 };
 
 #endif /* __FLOW_GRAPH_CHANNEL_H */
