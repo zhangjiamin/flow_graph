@@ -13,3 +13,5 @@
 *.cache
 *.unsuccessfulbuild
 *.sws
+*.pdsync
+*.pdsyncu
