@@ -26,7 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	typedef WinLoopOperator<base_async_queue_filter> loop_base_async_queue_filter;
 	typedef AsyncOperator<loop_base_async_queue_filter> async_loop_base_async_queue_filter;
 
-	typedef base_sink<int_consumer, base_async_queue_channel<int> > base_async_queue_sink;
+	typedef base_sink<int_consumer, base_async_queue_channel<int>, normal_sink_strategy<int_consumer,base_async_queue_channel<int>> > base_async_queue_sink;
 	typedef WinLoopOperator<base_async_queue_sink> loop_base_async_queue_sink;
 	typedef AsyncOperator<loop_base_async_queue_sink> async_loop_base_async_queue_sink;
 

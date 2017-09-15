@@ -18,4 +18,28 @@ public:
 	}
 };
 
+
+template <typename _Consumer, typename _InputChannel>
+struct base_sink_strategy
+{
+	typedef _Consumer		consumer_type;
+	typedef _InputChannel	input_channel_type;
+};
+
+template <typename _Consumer, typename _InputChannel>
+struct normal_sink_strategy: public base_sink_strategy<_Consumer, _InputChannel>
+{
+public:
+	void operator()(consumer_type& consumer, input_channel_type* channel)
+	{
+		bool result = false;
+		input_channel_type::data_type data;
+		result = channel->read(data);
+		if(result)
+		{
+			consumer(data);
+		}
+	}
+};
+
 #endif /* __FLOW_GRAPH_STRATEGY_H */
