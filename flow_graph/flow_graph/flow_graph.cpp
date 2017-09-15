@@ -3,16 +3,14 @@
 
 #include "stdafx.h"
 
-#include "fg_generator.h"
 #include "fg_channel.h"
 #include "fg_source.h"
-#include "fg_transformer.h"
-#include "fg_consumer.h"
-#include "fg_sink.h"
 #include "fg_filter.h"
+#include "fg_sink.h"
 #include "fg_operator.h"
 #include "fg_win_operator.h"
 #include "fg_connector.h"
+#include "fg_function.h"
 
 
 #include <iostream>
@@ -20,7 +18,7 @@ using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	typedef base_source<int_generator, base_async_queue_channel<int> > base_async_queue_source;
+	typedef base_source<int_generator, base_async_queue_channel<int>, normal_source_strategy<int_generator,base_async_queue_channel<int> > > base_async_queue_source;
 	typedef WinLoopOperator<base_async_queue_source> loop_base_async_queue_source;
 	typedef AsyncOperator<loop_base_async_queue_source> async_loop_base_async_queue_source;
 

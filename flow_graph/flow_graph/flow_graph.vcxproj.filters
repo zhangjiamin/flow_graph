@@ -57,6 +57,12 @@
     <ClInclude Include="fg_win_operator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fg_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fg_strategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

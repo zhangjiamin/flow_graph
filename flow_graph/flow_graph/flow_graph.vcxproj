@@ -141,10 +141,12 @@
     <ClInclude Include="fg_connector.h" />
     <ClInclude Include="fg_consumer.h" />
     <ClInclude Include="fg_filter.h" />
+    <ClInclude Include="fg_function.h" />
     <ClInclude Include="fg_generator.h" />
     <ClInclude Include="fg_operator.h" />
     <ClInclude Include="fg_sink.h" />
     <ClInclude Include="fg_source.h" />
+    <ClInclude Include="fg_strategy.h" />
     <ClInclude Include="fg_transformer.h" />
     <ClInclude Include="fg_win_operator.h" />
     <ClInclude Include="stdafx.h" />

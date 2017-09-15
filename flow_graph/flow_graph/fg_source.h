@@ -7,15 +7,16 @@ using namespace std;
 #include <boost/thread.hpp>
 using namespace boost;
 
-template <typename _Generator, typename _OutputChannel>
+template <typename _Generator, typename _OutputChannel, typename _Strategy>
 struct source
 {
 	typedef _Generator		generator_type;
 	typedef _OutputChannel	output_channel_type;
+	typedef _Strategy		strategy_type;
 };
 
-template <typename _Generator, typename _OutputChannel>
-struct base_source:public source<_Generator, _OutputChannel >
+template <typename _Generator, typename _OutputChannel, typename _Strategy>
+struct base_source:public source<_Generator, _OutputChannel, _Strategy >
 {
 public:
 	base_source(){m_name = "source";}
@@ -28,11 +29,12 @@ public:
 public:
 	void operate()
 	{
-		m_channel.write(m_generator());
+		m_strategy(m_generator, m_channel);
 	}
 protected:
 	generator_type					m_generator;
 	output_channel_type				m_channel;
+	strategy_type					m_strategy;
 	string							m_name;
 };
 
