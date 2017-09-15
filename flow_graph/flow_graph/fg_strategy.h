@@ -42,4 +42,30 @@ public:
 	}
 };
 
+template <typename _InputChannel, typename _Transformer, typename _OutputChannel>
+struct base_filter_strategy
+{
+	typedef _InputChannel	input_channel_type;
+	typedef _Transformer	transformer_type;
+	typedef _OutputChannel	output_channel_type;
+};
+
+template <typename _InputChannel, typename _Transformer, typename _OutputChannel>
+struct normal_filter_strategy: public base_filter_strategy<_InputChannel, _Transformer, _OutputChannel>
+{
+public:
+	void operator()(input_channel_type* input_channel, transformer_type& transformer, output_channel_type& output_channel)
+	{
+		bool result = false;
+		typename input_channel_type::data_type input_data;
+		typename output_channel_type::data_type output_data;
+		result = input_channel->read(input_data);
+		if(result)
+		{
+			output_data = transformer(input_data);
+			output_channel.write(output_data);
+		}
+	}
+};
+
 #endif /* __FLOW_GRAPH_STRATEGY_H */

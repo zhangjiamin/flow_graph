@@ -3,16 +3,17 @@
 #include <boost/thread.hpp>
 using namespace boost;
 
-template <typename _InputChannel, typename _Transformer, typename _OutputChannel>
+template <typename _InputChannel, typename _Transformer, typename _OutputChannel, typename _Strategy>
 struct filter
 {
 	typedef _InputChannel	input_channel_type;
 	typedef _Transformer	transformer_type;
 	typedef _OutputChannel	output_channel_type;
+	typedef _Strategy		strategy_type;
 };
 
-template <typename _InputChannel, typename _Transformer, typename _OutputChannel>
-struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel>
+template <typename _InputChannel, typename _Transformer, typename _OutputChannel, typename _Strategy>
+struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel, _Strategy>
 {
 public:
 	base_filter(){m_name = "filter";}
@@ -29,20 +30,13 @@ public:
 public:
 	void operate()
 	{
-		bool result = false;
-		typename input_channel_type::data_type input_data;
-		typename output_channel_type::data_type output_data;
-		result = m_input_channel->read(input_data);
-		if(result)
-		{
-			output_data = m_transformer(input_data);
-			m_output_channel.write(output_data);
-		}
+		m_strategy(m_input_channel, m_transformer, m_output_channel);
 	}
 protected:
 	transformer_type				m_transformer;
 	output_channel_type				m_output_channel;
 	input_channel_type*				m_input_channel;
+	strategy_type					m_strategy;
 	string							m_name;
 };
 

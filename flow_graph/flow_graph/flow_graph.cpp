@@ -22,7 +22,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	typedef WinLoopOperator<base_async_queue_source> loop_base_async_queue_source;
 	typedef AsyncOperator<loop_base_async_queue_source> async_loop_base_async_queue_source;
 
-	typedef base_filter<base_async_queue_channel<int>, int_transformer, base_async_queue_channel<int> > base_async_queue_filter;
+	typedef base_filter<base_async_queue_channel<int>, int_transformer, base_async_queue_channel<int>, normal_filter_strategy<base_async_queue_channel<int>, int_transformer, base_async_queue_channel<int>> > base_async_queue_filter;
 	typedef WinLoopOperator<base_async_queue_filter> loop_base_async_queue_filter;
 	typedef AsyncOperator<loop_base_async_queue_filter> async_loop_base_async_queue_filter;
 
