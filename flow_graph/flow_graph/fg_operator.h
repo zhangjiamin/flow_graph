@@ -8,12 +8,6 @@ using namespace std;
 #include <boost/thread.hpp>
 using namespace boost;
 
-
-struct Operator
-{
-	void operate(){}
-};
-
 template <typename AdaptableOperator>
 struct LoopOperator:public AdaptableOperator
 {
