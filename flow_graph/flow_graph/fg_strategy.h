@@ -12,9 +12,15 @@ template <typename _Generator, typename _OutputChannel>
 struct normal_source_strategy: public base_source_strategy<_Generator, _OutputChannel>
 {
 public:
-	void operator()(generator_type& generator, output_channel_type& channel)
+	void operator()(generator_type& generator, vector<output_channel_type*>& channels)
 	{
-		channel.write(generator());
+		typename generator_type::output_data_type data;
+		data = generator();
+		for(int i=0;i<channels.size();++i)
+		{
+			channels[i]->write(data);
+		}
+		
 	}
 };
 
@@ -54,7 +60,7 @@ template <typename _InputChannel, typename _Transformer, typename _OutputChannel
 struct normal_filter_strategy: public base_filter_strategy<_InputChannel, _Transformer, _OutputChannel>
 {
 public:
-	void operator()(input_channel_type* input_channel, transformer_type& transformer, output_channel_type& output_channel)
+	void operator()(input_channel_type* input_channel, transformer_type& transformer, vector<output_channel_type*>& output_channels)
 	{
 		bool result = false;
 		typename input_channel_type::data_type input_data;
@@ -63,7 +69,11 @@ public:
 		if(result)
 		{
 			output_data = transformer(input_data);
-			output_channel.write(output_data);
+			for(int i=0;i<output_channels.size();++i)
+			{
+				output_channels[i]->write(output_data);
+			}
+			
 		}
 	}
 };

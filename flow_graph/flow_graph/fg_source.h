@@ -2,6 +2,7 @@
 #define __FLOW_GRAPH_SOURCE_H
 #include <string>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 #include <boost/thread.hpp>
@@ -19,21 +20,25 @@ template <typename _Generator, typename _OutputChannel, typename _Strategy>
 struct base_source:public source<_Generator, _OutputChannel, _Strategy >
 {
 public:
-	base_source(){m_name = "source";}
+	base_source()
+	{
+		m_name = "source";
+		m_channels.push_back(new output_channel_type());
+	}
 	base_source(string name){m_name = name;}
 public:
-	output_channel_type* output_channel()
+	output_channel_type* output_channel(int index)
 	{
-		return &m_channel;
+		return m_channels[index];
 	}
 public:
 	void operate()
 	{
-		m_strategy(m_generator, m_channel);
+		m_strategy(m_generator, m_channels);
 	}
 protected:
 	generator_type					m_generator;
-	output_channel_type				m_channel;
+	vector<output_channel_type*>	m_channels;
 	strategy_type					m_strategy;
 	string							m_name;
 };

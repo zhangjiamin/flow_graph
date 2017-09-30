@@ -1,5 +1,9 @@
 #ifndef __FLOW_GRAPH_FILTER_H
 #define __FLOW_GRAPH_FILTER_H
+
+#include <vector>
+using namespace std;
+
 #include <boost/thread.hpp>
 using namespace boost;
 
@@ -16,12 +20,16 @@ template <typename _InputChannel, typename _Transformer, typename _OutputChannel
 struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel, _Strategy>
 {
 public:
-	base_filter(){m_name = "filter";}
+	base_filter()
+	{
+		m_name = "filter";
+		m_output_channels.push_back(new output_channel_type());
+	}
 	base_filter(string name){m_name = name;}
 public:
-	output_channel_type* const output_channel()
+	output_channel_type* const output_channel(int index)
 	{
-		return &m_output_channel;
+		return m_output_channels[index];
 	}
 	void input_channel(input_channel_type* channel)
 	{
@@ -30,11 +38,11 @@ public:
 public:
 	void operate()
 	{
-		m_strategy(m_input_channel, m_transformer, m_output_channel);
+		m_strategy(m_input_channel, m_transformer, m_output_channels);
 	}
 protected:
 	transformer_type				m_transformer;
-	output_channel_type				m_output_channel;
+	vector<output_channel_type*>	m_output_channels;
 	input_channel_type*				m_input_channel;
 	strategy_type					m_strategy;
 	string							m_name;
