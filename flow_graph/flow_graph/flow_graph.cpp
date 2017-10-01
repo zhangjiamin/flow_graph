@@ -34,6 +34,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	async_loop_base_async_queue_filter bfilter;//("filter");
 	async_loop_base_async_queue_sink bsink;//("sink");
 
+	bsource.setup(0,1);
+	bfilter.setup(1,1);
+	bsink.setup(1,0);
+
 	connect_source_to_sink(bsource,0,bfilter,0);
 	connect_source_to_sink(bfilter,0,bsink,0);
 

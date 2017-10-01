@@ -23,22 +23,36 @@ public:
 	base_source()
 	{
 		m_name = "source";
-		m_channels.push_back(new output_channel_type());
 	}
 	base_source(string name){m_name = name;}
-public:
-	output_channel_type* output_channel(int index)
+	~base_source()
 	{
-		return m_channels[index];
+		for(int i=0;i<m_output_channels.size();++i)
+		{
+			delete m_output_channels[i];
+		}
 	}
 public:
+	void setup(int number_input, int number_output)
+	{
+		for(int i=0;i<number_output;++i)
+		{
+			m_output_channels.push_back(new output_channel_type());
+		}
+	}
+
+	output_channel_type* output_channel(int index)
+	{
+		return m_output_channels[index];
+	}
+
 	void operate()
 	{
-		m_strategy(m_generator, m_channels);
+		m_strategy(m_generator, m_output_channels);
 	}
 protected:
 	generator_type					m_generator;
-	vector<output_channel_type*>	m_channels;
+	vector<output_channel_type*>	m_output_channels;
 	strategy_type					m_strategy;
 	string							m_name;
 };

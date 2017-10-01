@@ -20,30 +20,47 @@ template <typename _InputChannel, typename _Transformer, typename _OutputChannel
 struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel, _Strategy>
 {
 public:
-	base_filter()
-	{
-		m_name = "filter";
-		m_output_channels.push_back(new output_channel_type());
-	}
+	base_filter(){m_name = "filter";}
 	base_filter(string name){m_name = name;}
+	~base_filter()
+	{
+		for(int i=0;i<m_output_channels.size();++i)
+		{
+			delete m_output_channels[i];
+		}
+	}
 public:
+	void setup(int number_input, int number_output)
+	{
+		for(int i=0;i<number_input;++i)
+		{
+			m_input_channels.push_back(0);
+		}
+
+		for(int i=0;i<number_output;++i)
+		{
+			m_output_channels.push_back(new output_channel_type());
+		}
+	}
+
 	output_channel_type* const output_channel(int index)
 	{
 		return m_output_channels[index];
 	}
-	void input_channel(input_channel_type* channel)
+
+	void input_channel(int index, input_channel_type* channel)
 	{
-		m_input_channel = channel;
+		m_input_channels[index] = channel;
 	}
 public:
 	void operate()
 	{
-		m_strategy(m_input_channel, m_transformer, m_output_channels);
+		m_strategy(m_input_channels, m_transformer, m_output_channels);
 	}
 protected:
 	transformer_type				m_transformer;
 	vector<output_channel_type*>	m_output_channels;
-	input_channel_type*				m_input_channel;
+	vector<input_channel_type*>		m_input_channels;
 	strategy_type					m_strategy;
 	string							m_name;
 };
