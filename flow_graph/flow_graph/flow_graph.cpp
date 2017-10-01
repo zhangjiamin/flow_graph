@@ -32,18 +32,22 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	async_loop_base_async_queue_source bsource;//("source");
 	async_loop_base_async_queue_filter bfilter;//("filter");
-	async_loop_base_async_queue_sink bsink;//("sink");
+	async_loop_base_async_queue_sink bsink1;//("sink");
+	async_loop_base_async_queue_sink bsink2;//("sink");
 
 	bsource.setup(0,1);
-	bfilter.setup(1,1);
-	bsink.setup(1,0);
+	bfilter.setup(1,2);
+	bsink1.setup(1,0);
+	bsink2.setup(1,0);
 
 	connect_source_to_sink(bsource,0,bfilter,0);
-	connect_source_to_sink(bfilter,0,bsink,0);
+	connect_source_to_sink(bfilter,0,bsink1,0);
+	connect_source_to_sink(bfilter,1,bsink2,0);
 
 	bsource.start();
 	bfilter.start();
-	bsink.start();
+	bsink1.start();
+	bsink2.start();
 
 	this_thread::sleep(posix_time::seconds(5));
 	bsource.stop();
@@ -52,7 +56,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	bfilter.stop();
 
 	this_thread::sleep(posix_time::seconds(8));
-	bsink.stop();
+	bsink1.stop();
+
+	this_thread::sleep(posix_time::seconds(8));
+	bsink2.stop();
 
 	::system("pause");
 	return 0;
