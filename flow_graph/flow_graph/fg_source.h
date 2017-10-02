@@ -20,11 +20,7 @@ template <typename _Generator, typename _OutputChannel, typename _Strategy>
 struct base_source:public source<_Generator, _OutputChannel, _Strategy >
 {
 public:
-	base_source()
-	{
-		m_name = "source";
-	}
-	base_source(string name){m_name = name;}
+	base_source(){m_name = "source";}
 	~base_source()
 	{
 		for(int i=0;i<m_output_channels.size();++i)
@@ -33,6 +29,9 @@ public:
 		}
 	}
 public:
+	void setname(string name){m_name = name;}
+	string getname(){return m_name;}
+
 	void setup(int number_input, int number_output)
 	{
 		for(int i=0;i<number_output;++i)

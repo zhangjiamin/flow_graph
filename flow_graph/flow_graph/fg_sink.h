@@ -21,9 +21,11 @@ struct base_sink:public sink<_Consumer, _InputChannel, _Strategy>
 {
 public:
 	base_sink(){m_name = "sink";}
-	base_sink(string name){m_name = name;}
 	~base_sink(){}
 public:
+	void setname(string name){m_name = name;}
+	string getname(){return m_name;}
+
 	void setup(int number_input, int number_output)
 	{
 		for(int i=0;i<number_input;++i)
@@ -49,9 +51,6 @@ protected:
 template <typename _InputDataType, typename _Consumer, typename _Strategy>
 struct base_sync_queue_channel_sink:public base_sink<_Consumer, base_queue_channel<_InputDataType>,  _Strategy>
 {
-public:
-	base_sync_queue_channel_sink(){	m_name = "sink";}
-	base_sync_queue_channel_sink(string name){m_name = name;}
 };
 
 #endif /* __FLOW_GRAPH_SINK_H */

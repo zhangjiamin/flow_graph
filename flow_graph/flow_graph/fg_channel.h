@@ -19,9 +19,11 @@ struct base_queue_channel:public channel<_DataType>
 {
 public:
 	base_queue_channel(){m_name = "channel";}
-	base_queue_channel(string name){m_name = name;}
 
 public:
+	void setname(string name){m_name = name;}
+	string getname(){return m_name;}
+
 	void write(const data_type& data)
 	{
 		m_queue.push(data);

@@ -21,7 +21,6 @@ struct base_filter:public filter<_InputChannel, _Transformer, _OutputChannel, _S
 {
 public:
 	base_filter(){m_name = "filter";}
-	base_filter(string name){m_name = name;}
 	~base_filter()
 	{
 		for(int i=0;i<m_output_channels.size();++i)
@@ -30,6 +29,9 @@ public:
 		}
 	}
 public:
+	void setname(string name){m_name = name;}
+	string getname(){return m_name;}
+
 	void setup(int number_input, int number_output)
 	{
 		for(int i=0;i<number_input;++i)

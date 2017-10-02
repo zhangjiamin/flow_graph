@@ -18,6 +18,7 @@ using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	/*
 	typedef base_source<int_generator, base_async_queue_channel<int>, normal_source_strategy<int_generator,base_async_queue_channel<int> > > base_async_queue_source;
 	typedef WinLoopOperator<base_async_queue_source> loop_base_async_queue_source;
 	typedef AsyncOperator<loop_base_async_queue_source> async_loop_base_async_queue_source;
@@ -29,11 +30,30 @@ int _tmain(int argc, _TCHAR* argv[])
 	typedef base_sink<int_consumer, base_async_queue_channel<int>, normal_sink_strategy<int_consumer,base_async_queue_channel<int>> > base_async_queue_sink;
 	typedef WinLoopOperator<base_async_queue_sink> loop_base_async_queue_sink;
 	typedef AsyncOperator<loop_base_async_queue_sink> async_loop_base_async_queue_sink;
+	*/
+
+	typedef base_source<string_generator, base_async_queue_channel<string>, normal_source_strategy<string_generator,base_async_queue_channel<string> > > base_async_queue_source;
+	typedef WinLoopOperator<base_async_queue_source> loop_base_async_queue_source;
+	typedef AsyncOperator<loop_base_async_queue_source> async_loop_base_async_queue_source;
+
+	typedef base_filter<base_async_queue_channel<string>, string_transformer, base_async_queue_channel<string>, normal_filter_strategy<base_async_queue_channel<string>, string_transformer, base_async_queue_channel<string>> > base_async_queue_filter;
+	typedef WinLoopOperator<base_async_queue_filter> loop_base_async_queue_filter;
+	typedef AsyncOperator<loop_base_async_queue_filter> async_loop_base_async_queue_filter;
+
+	typedef base_sink<string_consumer, base_async_queue_channel<string>, normal_sink_strategy<string_consumer,base_async_queue_channel<string>> > base_async_queue_sink;
+	typedef WinLoopOperator<base_async_queue_sink> loop_base_async_queue_sink;
+	typedef AsyncOperator<loop_base_async_queue_sink> async_loop_base_async_queue_sink;
+
 
 	async_loop_base_async_queue_source bsource;//("source");
 	async_loop_base_async_queue_filter bfilter;//("filter");
 	async_loop_base_async_queue_sink bsink1;//("sink");
 	async_loop_base_async_queue_sink bsink2;//("sink");
+
+	bsource.setname("source1");
+	bfilter.setname("filter1");
+	bsink1.setname("sink1");
+	bsink2.setname("sink2");
 
 	bsource.setup(0,1);
 	bfilter.setup(1,2);
